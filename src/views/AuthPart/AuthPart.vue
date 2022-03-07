@@ -24,13 +24,25 @@
         </a-tabPane>
         <a-tabPane tab="注册" key="2">
           <div class="item">
-            <a-input size="large" placeholder="账户" />
+            <a-input
+              v-model:value="regForm.account"
+              size="large"
+              placeholder="账户"
+            />
           </div>
-          <div class="item"><a-input size="large" placeholder="密码" /></div>
+          <div class="item">
+            <a-input
+              v-model:value="regForm.password"
+              size="large"
+              placeholder="密码"
+            />
+          </div>
           <div class="item"><a-input size="large" placeholder="邀请码" /></div>
 
           <div class="item">
-            <a-button size="large" type="primary">注册</a-button>
+            <a-button @click="register" size="large" type="primary"
+              >注册</a-button
+            >
           </div>
         </a-tabPane>
       </a-tabs>
@@ -38,7 +50,23 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import { defineComponent, reactive } from "vue";
+import { auth } from "@/service";
+export default defineComponent({
+  setup() {
+    const regForm = reactive({
+      account: "",
+      password: "",
+    });
+    const register = async () => {
+      await auth.register(regForm.account, regForm.password);
+      console.log("gg");
+    };
+    return { regForm, register };
+  },
+});
+</script>
 
 <style lang="sass" scoped>
 @import './AuthPart.sass'
